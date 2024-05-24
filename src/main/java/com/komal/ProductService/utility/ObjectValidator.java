@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import com.komal.ProductService.exception.ResourseAlreadyExistException;
 import com.komal.ProductService.exception.ResourseNotExistException;
 import com.komal.ProductService.exception.SomethingWentWrongException;
-
+import com.komal.ProductService.model.CategoryModel;
 import com.komal.ProductService.model.ProductModel;
+import com.komal.ProductService.model.SupplierModel;
 
 
 
@@ -19,7 +21,8 @@ public class ObjectValidator {
 
 	
 	
-	
+	@Autowired
+	RestTemplate resttemplate;
 	
 	
 	
@@ -53,6 +56,7 @@ public class ObjectValidator {
 		if(supplierId>0) {
 			try {
 				// supplierservice.getsupplierbyId(supplierId);
+				SupplierModel supplierModel = resttemplate.getForObject("http://localhost:8081/supplier/get-supplier/"+productmodel.getSupplierId(), SupplierModel.class);
 			} catch (ResourseNotExistException e) {
 				
 				validatemap.put("Supplier",e.getMessage());
@@ -68,6 +72,8 @@ public class ObjectValidator {
 		if(categoryId>0) {
 			try {
 	// categoryService.getcategoryById(categoryId);
+				
+				resttemplate.getForObject("http://localhost:8093/category/get-category/"+productmodel.getCategoryId(), CategoryModel.class);
 		} catch (ResourseNotExistException e) {
 			
 			validatemap.put("Category",e.getMessage());
