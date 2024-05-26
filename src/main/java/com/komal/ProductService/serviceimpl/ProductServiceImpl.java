@@ -467,7 +467,7 @@ public class ProductServiceImpl implements ProductService {
 			psc.setProductModel(productModel);
 			
 			try {
-				SupplierModel supplierModel=restTemplate.getForObject("http://localhost:8081/supplier/get-supplier/"+productModel.getSupplierId(), SupplierModel.class);
+				SupplierModel supplierModel=restTemplate.getForObject("http://SUPPLIERSERVICE/supplier/get-supplier/"+productModel.getSupplierId(), SupplierModel.class);
 				if(supplierModel.getSupplierId()<=0) {
 					psc.setSupplierModel(null);
 				}else {
@@ -482,7 +482,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			
 			try {
-				CategoryModel categoryModel=restTemplate.getForObject("http://localhost:8093/category/get-category/"+productModel.getCategoryId(), CategoryModel.class);
+				CategoryModel categoryModel=restTemplate.getForObject("http://CATEGORYSERVICE/category/get-category/"+productModel.getCategoryId(), CategoryModel.class);
 				if(categoryModel.getCategoryId()<=0)
 				{
 					
